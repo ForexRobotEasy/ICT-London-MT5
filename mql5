@@ -1,0 +1,118 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                              ICT London MT5      |
+//|                            https://www.forexroboteasy.com         |
+//|                                      Developed by Forex Robot Easy Team |
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                        Custom Indicator Inputs                    |
+//+------------------------------------------------------------------+
+input int period = 14; // Period for calculating moving average
+input ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE; // Price used for calculation
+
+//+------------------------------------------------------------------+
+//|                        Global Variables                           |
+//+------------------------------------------------------------------+
+datetime asian_session_start; // Start time of the Asian session
+datetime asian_session_end; // End time of the Asian session
+
+//+------------------------------------------------------------------+
+//|                      Expert Advisor Inputs                        |
+//+------------------------------------------------------------------+
+input double lot_size = 0.1; // Lot size for trading
+input double stop_loss = 100; // Stop loss in points
+input double take_profit = 200; // Take profit in points
+
+//+------------------------------------------------------------------+
+//|                      Expert Advisor Initialization               |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+   asian_session_start = TimeLocal() - PeriodSeconds(PERIOD_D1); // Set Asian session start time
+   asian_session_end = TimeLocal(); // Set Asian session end time
+   
+   return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//|                         Expert Advisor Start                      |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   if(IsAsianSession())
+   {
+      // Perform Asian session analysis
+      AnalyzeAsianSession();
+   }
+   else if(IsLondonSession())
+   {
+      // Perform London session trading
+      TradeLondonSession();
+   }
+}
+
+//+------------------------------------------------------------------+
+//|                      Function: IsAsianSession                      |
+//|                   Check if current time is within the Asian session  |
+//+------------------------------------------------------------------+
+bool IsAsianSession()
+{
+   datetime current_time = TimeLocal();
+   
+   if(current_time >= asian_session_start && current_time < asian_session_end)
+      return true;
+   
+   return false;
+}
+
+//+------------------------------------------------------------------+
+//|                   Function: IsLondonSession                       |
+//|                Check if current time is within the London session  |
+//+------------------------------------------------------------------+
+bool IsLondonSession()
+{
+   datetime current_time = TimeLocal();
+   
+   if(current_time >= asian_session_end && current_time < asian_session_end + PeriodSeconds(PERIOD_H1))
+      return true;
+   
+   return false;
+}
+
+//+------------------------------------------------------------------+
+//|                    Function: AnalyzeAsianSession                   |
+//|                  Perform analysis of the Asian session for market direction  |
+//+------------------------------------------------------------------+
+void AnalyzeAsianSession()
+{
+   // Add code here to analyze historical data and market sentiment
+   // to determine the prevalent market direction during the Asian session
+   
+   // Add code here to utilize AI technology and mathematical calculations
+   // to derive insights into potential market reversals
+}
+
+//+------------------------------------------------------------------+
+//|                     Function: TradeLondonSession                   |
+//|              Identify and trade opportunities during the London session  |
+//+------------------------------------------------------------------+
+void TradeLondonSession()
+{
+   // Add code here to identify trading opportunities based on the analysis
+   // conducted during the Asian session
+   
+   // Add code here to implement trading logic to capitalize on potential
+   // market reversals during the London session
+   
+   // Add code here to open trades with the specified lot size, stop loss,
+   // and take profit
+}
+
+//+------------------------------------------------------------------+
+//|                        Expert Advisor Deinitialization            |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+   // Add code here for any necessary cleanup or deinitialization
+}
